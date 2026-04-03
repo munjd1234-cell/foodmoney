@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>황금농부 - 통합 비즈니스 시스템</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .glass { background: rgba(31, 41, 55, 0.7); backdrop-filter: blur(10px); }
+        .card-hover:hover { transform: translateY(-5px); transition: all 0.3s; border-color: #eab308; }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-100 min-h-screen">
+
+    <nav class="border-b border-gray-800 p-4 sticky top-0 z-50 glass">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <i class="fa-solid fa-wheat-awn text-yellow-500 text-2xl"></i>
+                <span class="text-xl font-bold tracking-tighter">GOLDEN FARMER v1.0</span>
+            </div>
+            <div class="flex space-x-6 text-sm font-medium">
+                <a href="index.html" class="text-yellow-500">대시보드</a>
+                <a href="pages/sourcing.html" class="hover:text-yellow-500">상품소싱</a>
+                <a href="pages/editor.html" class="hover:text-yellow-500">상세페이지</a>
+                <a href="pages/order.html" class="hover:text-yellow-500">발주관리</a>
+                <a href="pages/finance.html" class="hover:text-yellow-500">매입/정산</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto p-6 md:p-10">
+        
+        <header class="mb-12">
+            <h2 class="text-3xl font-bold mb-6">오늘의 비즈니스 현황</h2>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div class="bg-gray-800 p-6 rounded-2xl border border-gray-700">
+                    <p class="text-gray-400 text-sm mb-1">오늘의 매출</p>
+                    <p class="text-2xl font-bold text-green-400">₩ 12,450,000</p>
+                </div>
+                <div class="bg-gray-800 p-6 rounded-2xl border border-gray-700">
+                    <p class="text-gray-400 text-sm mb-1">처리할 발주</p>
+                    <p class="text-2xl font-bold text-yellow-500">28 건</p>
+                </div>
+                <div class="bg-gray-800 p-6 rounded-2xl border border-gray-700">
+                    <p class="text-gray-400 text-sm mb-1">신규 소싱처</p>
+                    <p class="text-2xl font-bold text-blue-400">12 곳</p>
+                </div>
+                <div class="bg-gray-800 p-6 rounded-2xl border border-gray-700">
+                    <p class="text-gray-400 text-sm mb-1">이번달 순수익</p>
+                    <p class="text-2xl font-bold text-pink-400">₩ 42,800,000</p>
+                </div>
+            </div>
+        </header>
+
+        <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+            
+            <a href="pages/sourcing.html" class="bg-gray-800 p-8 rounded-3xl border border-gray-700 card-hover">
+                <div class="w-12 h-12 bg-blue-500/20 text-blue-500 rounded-xl flex items-center justify-center mb-6 text-2xl">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-2">상품 소싱처 관리</h3>
+                <p class="text-gray-400 text-sm leading-relaxed">밴드, 카페, 쿠팡에서 수집한 원물 판매처를 관리하고 단가를 분석합니다.</p>
+            </a>
+
+            <a href="pages/editor.html" class="bg-gray-800 p-8 rounded-3xl border border-gray-700 card-hover">
+                <div class="w-12 h-12 bg-purple-500/20 text-purple-500 rounded-xl flex items-center justify-center mb-6 text-2xl">
+                    <i class="fa-solid fa-pen-nib"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-2">상세페이지 AI 기획</h3>
+                <p class="text-gray-400 text-sm leading-relaxed">AI 프롬프트를 활용해 클릭을 부르는 스토리텔링과 이미지 구성을 설계합니다.</p>
+            </a>
+
+            <a href="pages/order.html" class="bg-gray-800 p-8 rounded-3xl border border-gray-700 card-hover">
+                <div class="w-12 h-12 bg-yellow-500/20 text-yellow-500 rounded-xl flex items-center justify-center mb-6 text-2xl">
+                    <i class="fa-solid fa-truck-fast"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-2">통합 발주 시스템</h3>
+                <p class="text-gray-400 text-sm leading-relaxed">주문 데이터를 산지 농장주에게 전송하고 송장을 추적하는 자동화 워크플로우.</p>
+            </a>
+
+            <a href="pages/finance.html" class="bg-gray-800 p-8 rounded-3xl border border-gray-700 card-hover">
+                <div class="w-12 h-12 bg-green-500/20 text-green-500 rounded-xl flex items-center justify-center mb-6 text-2xl">
+                    <i class="fa-solid fa-file-invoice-dollar"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-2">매입 및 정산 관리</h3>
+                <p class="text-gray-400 text-sm leading-relaxed">복잡한 정산 과정을 자동화하여 실제 순이익을 실시간으로 파악합니다.</p>
+            </a>
+
+            <a href="pages/cs.html" class="bg-gray-800 p-8 rounded-3xl border border-gray-700 card-hover">
+                <div class="w-12 h-12 bg-red-500/20 text-red-500 rounded-xl flex items-center justify-center mb-6 text-2xl">
+                    <i class="fa-solid fa-headset"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-2">CS 자동화 응답</h3>
+                <p class="text-gray-400 text-sm leading-relaxed">신선식품 특유의 클레임(파손, 변질)에 대한 빠른 대응 시나리오를 관리합니다.</p>
+            </a>
+
+            <a href="pages/settings.html" class="bg-gray-800 p-8 rounded-3xl border border-gray-700 card-hover">
+                <div class="w-12 h-12 bg-gray-500/20 text-gray-400 rounded-xl flex items-center justify-center mb-6 text-2xl">
+                    <i class="fa-solid fa-gear"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-2">데이터 자동 연동 설정</h3>
+                <p class="text-gray-400 text-sm leading-relaxed">API 연동, 구글 시트 연결, 알림 봇 설정을 제어합니다.</p>
+            </a>
+
+        </section>
+
+        <footer class="bg-gray-800/50 p-6 rounded-2xl border border-gray-700 flex justify-between items-center text-sm">
+            <div class="flex items-center space-x-4">
+                <span class="flex items-center"><i class="fa-solid fa-circle text-green-500 text-[10px] mr-2"></i> 시스템 정상 작동 중</span>
+                <span class="text-gray-500">|</span>
+                <span class="text-gray-400 font-mono">2026-04-03 Server: OK</span>
+            </div>
+            <div class="text-gray-500 italic">
+                "매일 1시간, 꾸준함이 3억 매출을 만듭니다."
+            </div>
+        </footer>
+    </main>
+
+</body>
+</html>
