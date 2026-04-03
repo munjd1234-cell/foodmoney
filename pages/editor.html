@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>상세페이지 AI 기획 - 황금농부</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .prompt-box { background: rgba(0, 0, 0, 0.3); border: 1px dashed #4b5563; }
+        .copy-btn:active { transform: scale(0.95); }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-100 min-h-screen">
+
+    <div class="flex">
+        <aside class="w-64 bg-gray-800 h-screen sticky top-0 p-6 border-r border-gray-700">
+            <div class="flex items-center space-x-2 mb-10">
+                <i class="fa-solid fa-wheat-awn text-yellow-500 text-xl"></i>
+                <span class="text-lg font-bold">GOLDEN FARMER</span>
+            </div>
+            <nav class="space-y-4 text-sm">
+                <a href="../index.html" class="block p-3 hover:bg-gray-700 rounded-lg"><i class="fa-solid fa-chart-line mr-3"></i>대시보드</a>
+                <a href="sourcing.html" class="block p-3 hover:bg-gray-700 rounded-lg"><i class="fa-solid fa-magnifying-glass mr-3"></i>상품 소싱</a>
+                <a href="editor.html" class="block p-3 bg-yellow-600 rounded-lg font-bold"><i class="fa-solid fa-pen-nib mr-3"></i>상세페이지</a>
+                <a href="order.html" class="block p-3 hover:bg-gray-700 rounded-lg"><i class="fa-solid fa-truck-fast mr-3"></i>발주 관리</a>
+                <a href="finance.html" class="block p-3 hover:bg-gray-700 rounded-lg"><i class="fa-solid fa-file-invoice-dollar mr-3"></i>매입/정산</a>
+            </nav>
+        </aside>
+
+        <main class="flex-1 p-8">
+            <header class="flex justify-between items-center mb-8">
+                <div>
+                    <h2 class="text-2xl font-bold text-purple-400">상세페이지 AI 기획 도구</h2>
+                    <p class="text-gray-400 text-sm">AI 프롬프트를 활용해 고퀄리티 상세페이지 구성을 설계합니다.</p>
+                </div>
+            </header>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                
+                <div class="space-y-6">
+                    <div class="bg-gray-800 p-6 rounded-2xl border border-gray-700">
+                        <h3 class="text-lg font-bold mb-4 text-yellow-500">1. 상품 기본 정보</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="text-xs text-gray-500 block mb-1">상품명</label>
+                                <input type="text" id="prodName" placeholder="예: 청송 꿀사과 5kg" class="w-full bg-gray-700 border-none rounded-lg px-4 py-2 focus:ring-2 focus:ring-yellow-500 text-sm">
+                            </div>
+                            <div>
+                                <label class="text-xs text-gray-500 block mb-1">핵심 소구점 (스토리)</label>
+                                <textarea id="prodStory" rows="3" placeholder="예: 30년 장인이 산지에서 새벽에 직접 따서 보내는..." class="w-full bg-gray-700 border-none rounded-lg px-4 py-2 focus:ring-2 focus:ring-yellow-500 text-sm"></textarea>
+                            </div>
+                            <button onclick="generatePlan()" class="w-full bg-purple-600 hover:bg-purple-500 py-3 rounded-lg font-bold text-sm transition">AI 기획안 생성하기</button>
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-800 p-6 rounded-2xl border border-gray-700">
+                        <h3 class="text-lg font-bold mb-4 text-blue-400">2. 고품질 이미지 프롬프트</h3>
+                        <p class="text-xs text-gray-500 mb-4">미드저니(Midjourney)나 스테이블 디퓨전에서 즉시 사용 가능합니다.</p>
+                        <div class="space-y-4">
+                            <div class="prompt-box p-4 rounded-lg relative group">
+                                <span class="text-xs text-gray-500 block mb-2 font-mono uppercase">Food Photography Prompt</span>
+                                <p id="imgPrompt" class="text-sm text-gray-300 leading-relaxed italic">
+                                    "A hyper-realistic food photography of fresh [Product Name], soft natural lighting, morning dew, 8k resolution, cinematic composition..."
+                                </p>
+                                <button onclick="copyToClipboard('imgPrompt')" class="absolute top-4 right-4 opacity-0 group-hover:opacity-100 copy-btn bg-gray-600 p-2 rounded text-xs transition">복사</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-gray-800 p-8 rounded-3xl border border-gray-700 shadow-2xl overflow-y-auto max-h-[700px]">
+                    <div class="border-b border-gray-700 pb-4 mb-6">
+                        <span class="text-xs bg-yellow-900/30 text-yellow-500 px-3 py-1 rounded-full font-bold">AI 기획 초안</span>
+                        <h3 id="previewTitle" class="text-2xl font-bold mt-4">상품명을 입력해주세요</h3>
+                    </div>
+                    
+                    <div id="planResult" class="space-y-8 text-sm leading-relaxed text-gray-300">
+                        <section>
+                            <h4 class="text-purple-400 font-bold mb-2">● 인트로 (훅킹 포인트)</h4>
+                            <p class="italic">"한 입 베어 무는 순간 느껴지는 산지의 신선함, 진짜를 아는 당신을 위한..."</p>
+                        </section>
+                        <section>
+                            <h4 class="text-purple-400 font-bold mb-2">● 왜 우리 상품인가? (3단 논법)</h4>
+                            <ol class="list-decimal list-inside space-y-2">
+                                <li>산지 직송의 압도적 신선함</li>
+                                <li>30년 경력 마스터의 엄격한 선별</li>
+                                <li>불필요한 유통마진을 제거한 합리적 가격</li>
+                            </ol>
+                        </section>
+                        <section>
+                            <h4 class="text-purple-400 font-bold mb-2">● 이미지 구성 시나리오</h4>
+                            <ul class="list-disc list-inside space-y-2">
+                                <li>[Main] 갓 수확한 제품의 생생한 클로즈업샷</li>
+                                <li>[Process] 정성스럽게 포장하는 농장주의 손길</li>
+                                <li>[Life] 가정집 식탁에 자연스럽게 배치된 샷</li>
+                            </ul>
+                        </section>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <script>
+        function generatePlan() {
+            const name = document.getElementById('prodName').value || "선택된 상품";
+            const story = document.getElementById('prodStory').value || "산지의 신선함";
+            
+            document.getElementById('previewTitle').innerText = name;
+            document.getElementById('imgPrompt').innerText = 
+                `"Professional macro photography of ${name}, centered composition, ${story}, highly detailed texture, morning sunlight, bokeh background, 8k, photorealistic --ar 16:9"`;
+            
+            alert('AI 기획안과 프롬프트가 업데이트되었습니다!');
+        }
+
+        function copyToClipboard(elementId) {
+            const text = document.getElementById(elementId).innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                alert('프롬프트가 복사되었습니다!');
+            });
+        }
+    </script>
+</body>
+</html>
