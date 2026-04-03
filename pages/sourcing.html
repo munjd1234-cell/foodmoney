@@ -7,25 +7,24 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        .status-badge { @apply px-2 py-1 rounded-full text-xs font-bold; }
         .row-hover:hover { background-color: rgba(55, 65, 81, 0.5); }
     </style>
 </head>
 <body class="bg-gray-900 text-gray-100 min-h-screen">
 
     <div class="flex">
-        <aside class="w-64 bg-gray-800 h-screen sticky top-0 p-6 border-r border-gray-700">
+        <aside class="w-64 bg-gray-800 h-screen sticky top-0 p-6 border-r border-gray-700 text-sm">
             <div class="flex items-center space-x-2 mb-10">
                 <i class="fa-solid fa-wheat-awn text-yellow-500 text-xl"></i>
-                <span class="text-lg font-bold">GOLDEN FARMER</span>
+                <span class="text-lg font-bold uppercase">Golden Farmer</span>
             </div>
-            <nav class="space-y-4 text-sm">
-                <a href="../index.html" class="block p-3 hover:bg-gray-700 rounded-lg"><i class="fa-solid fa-chart-line mr-3"></i>대시보드</a>
-                <a href="sourcing.html" class="block p-3 bg-yellow-600 rounded-lg font-bold"><i class="fa-solid fa-magnifying-glass mr-3"></i>상품 소싱</a>
-                <a href="editor.html" class="block p-3 hover:bg-gray-700 rounded-lg"><i class="fa-solid fa-pen-nib mr-3"></i>상세페이지</a>
-                <a href="order.html" class="block p-3 hover:bg-gray-700 rounded-lg"><i class="fa-solid fa-truck-fast mr-3"></i>발주 관리</a>
-                <a href="finance.html" class="block p-3 hover:bg-gray-700 rounded-lg"><i class="fa-solid fa-file-invoice-dollar mr-3"></i>매입/정산</a>
-                <a href="settings.html" class="block p-3 hover:bg-gray-700 rounded-lg"><i class="fa-solid fa-gear mr-3 text-gray-400"></i>데이터 허브</a>
+            <nav class="space-y-4">
+                <a href="../index.html" class="block p-3 hover:bg-gray-700 rounded-lg">대시보드</a>
+                <a href="sourcing.html" class="block p-3 bg-yellow-600 rounded-lg font-bold text-white">상품 소싱</a>
+                <a href="editor.html" class="block p-3 hover:bg-gray-700 rounded-lg">상세페이지</a>
+                <a href="order.html" class="block p-3 hover:bg-gray-700 rounded-lg">발주 관리</a>
+                <a href="finance.html" class="block p-3 hover:bg-gray-700 rounded-lg">매입/정산</a>
+                <a href="settings.html" class="block p-3 hover:bg-gray-700 rounded-lg text-gray-400">데이터 허브</a>
             </nav>
         </aside>
 
@@ -33,44 +32,36 @@
             <header class="flex justify-between items-center mb-8">
                 <div>
                     <h2 class="text-2xl font-bold">상품 소싱처 관리</h2>
-                    <p class="text-gray-400 text-sm">수집된 원물 데이터와 농장주 정보를 관리합니다.</p>
-                </div>
-                <div class="flex space-x-3">
-                    <button class="bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded-lg text-sm"><i class="fa-solid fa-download mr-2"></i>엑셀 다운로드</button>
-                    <button class="bg-yellow-600 hover:bg-yellow-500 px-4 py-2 rounded-lg text-sm font-bold"><i class="fa-solid fa-plus mr-2"></i>수동 소싱 추가</button>
+                    <p class="text-gray-400 text-sm">실시간 구글 시트 데이터를 기반으로 검색합니다.</p>
                 </div>
             </header>
 
             <div class="bg-gray-800 p-4 rounded-xl border border-gray-700 mb-6 flex space-x-4">
-                <select id="platformSelect" class="bg-gray-700 border-none rounded-lg text-sm px-4 py-2 focus:ring-2 focus:ring-yellow-500 text-white">
+                <select id="platformSelect" class="bg-gray-700 border-none rounded-lg text-sm px-4 py-2 text-white">
                     <option value="전체">플랫폼 전체</option>
                     <option value="밴드">네이버 밴드</option>
                     <option value="카페">네이버 카페</option>
-                    <option value="쿠팡">쿠팡</option>
                 </select>
-                <input type="text" id="searchInput" placeholder="상품명 또는 키워드 검색..." class="flex-1 bg-gray-700 border-none rounded-lg text-sm px-4 py-2 focus:ring-2 focus:ring-yellow-500 text-white">
-                <button onclick="searchData()" class="bg-blue-600 hover:bg-blue-500 px-6 py-2 rounded-lg text-sm font-bold transition">검색</button>
+                <input type="text" id="searchInput" placeholder="검색어를 입력하세요 (예: 미꾸라지)" class="flex-1 bg-gray-700 border-none rounded-lg text-sm px-4 py-2 text-white">
+                <button onclick="searchData()" class="bg-blue-600 hover:bg-blue-500 px-6 py-2 rounded-lg text-sm font-bold">검색</button>
             </div>
 
-            <div class="bg-gray-800 rounded-2xl border border-gray-700 overflow-hidden shadow-xl">
-                <table class="w-full text-left border-collapse">
-                    <thead class="bg-gray-700/50 text-gray-400 text-xs uppercase">
+            <div class="bg-gray-800 rounded-2xl border border-gray-700 overflow-hidden">
+                <table class="w-full text-left">
+                    <thead class="bg-gray-700/50 text-gray-400 text-xs">
                         <tr>
                             <th class="p-4">수집일</th>
                             <th class="p-4">플랫폼</th>
                             <th class="p-4">상품명</th>
-                            <th class="p-4">공급가(원가)</th>
+                            <th class="p-4">공급가</th>
                             <th class="p-4">시장가</th>
                             <th class="p-4">마진율</th>
                             <th class="p-4">상태</th>
-                            <th class="p-4 text-center">링크</th>
+                            <th class="p-4 text-center">관리</th>
                         </tr>
                     </thead>
-                    <tbody id="sourcingTableBody" class="text-sm divide-y divide-gray-700">
-                        <tr>
-                            <td colspan="8" class="p-10 text-center text-gray-500 italic">데이터를 불러오는 중입니다...</td>
-                        </tr>
-                    </tbody>
+                    <tbody id="sourcingTableBody" class="text-sm divide-y divide-gray-700 text-gray-300">
+                        </tbody>
                 </table>
             </div>
         </main>
@@ -78,73 +69,51 @@
 
     <script src="../assets/js/main.js"></script>
     <script>
-        let allSourcingData = []; // 구글 시트에서 가져온 전체 데이터를 보관
+        let allSourcingData = [];
 
-        // 1. 페이지 로드 시 데이터 호출
         async function init() {
+            // main.js의 fetchSheetData 함수를 사용하여 데이터를 가져옵니다.
             const data = await fetchSheetData();
             if (data && data.length > 1) {
-                allSourcingData = data.slice(1); // 헤더 제외
+                allSourcingData = data.slice(1); // 제목줄 제외
                 renderTable(allSourcingData);
             } else {
-                document.getElementById('sourcingTableBody').innerHTML = 
-                    '<tr><td colspan="8" class="p-10 text-center text-red-400">데이터를 찾을 수 없습니다. 데이터 허브에서 주소를 확인하세요.</td></tr>';
+                document.getElementById('sourcingTableBody').innerHTML = '<tr><td colspan="8" class="p-10 text-center text-red-400">데이터 허브에서 시트 주소를 확인해주세요!</td></tr>';
             }
         }
 
-        // 2. 테이블 그리기 함수
         function renderTable(dataList) {
-            const tableBody = document.getElementById('sourcingTableBody');
-            tableBody.innerHTML = "";
-
+            const tbody = document.getElementById('sourcingTableBody');
+            tbody.innerHTML = "";
             dataList.forEach(row => {
-                if (row.length < 3) return; // 유효하지 않은 행 건너뜀
-
                 const tr = document.createElement('tr');
-                tr.className = "row-hover transition border-b border-gray-800";
-                
-                // 마진율에 따른 텍스트 강조 (예: 30% 이상이면 초록색)
-                const margin = row[5] || "0%";
-                
+                tr.className = "row-hover";
                 tr.innerHTML = `
-                    <td class="p-4 text-gray-500 text-xs">${row[0] || '-'}</td>
-                    <td class="p-4"><span class="text-blue-400 font-medium">${row[1] || '-'}</span></td>
-                    <td class="p-4 font-bold text-sm">${row[2] || '-'}</td>
-                    <td class="p-4 text-sm">${row[3] || '0원'}</td>
-                    <td class="p-4 text-gray-400 text-sm">${row[4] || '0원'}</td>
-                    <td class="p-4 text-green-400 font-bold">${margin}</td>
-                    <td class="p-4"><span class="bg-yellow-900/30 text-yellow-500 px-2 py-1 rounded text-[10px]">${row[6] || '검토중'}</span></td>
-                    <td class="p-4 text-center">
-                        <a href="${row[7] || '#'}" target="_blank" class="text-blue-400 hover:text-blue-200 transition">
-                            <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                        </a>
-                    </td>
+                    <td class="p-4 text-xs">${row[0]}</td>
+                    <td class="p-4 text-blue-400">${row[1]}</td>
+                    <td class="p-4 font-bold text-white">${row[2]}</td>
+                    <td class="p-4">${row[3]}</td>
+                    <td class="p-4">${row[4]}</td>
+                    <td class="p-4 text-green-400 font-bold">${row[5]}</td>
+                    <td class="p-4"><span class="bg-gray-700 px-2 py-1 rounded text-[10px]">${row[6]}</span></td>
+                    <td class="p-4 text-center"><a href="${row[7]}" target="_blank" class="text-blue-400 hover:underline">이동</a></td>
                 `;
-                tableBody.appendChild(tr);
+                tbody.appendChild(tr);
             });
         }
 
-        // 3. 검색 기능 (반응이 없던 부분 해결)
         function searchData() {
-            const selectedPlatform = document.getElementById('platformSelect').value;
-            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const platform = document.getElementById('platformSelect').value;
+            const keyword = document.getElementById('searchInput').value.toLowerCase();
 
-            const filteredData = allSourcingData.filter(row => {
-                const matchesPlatform = (selectedPlatform === "전체") || row[1].includes(selectedPlatform);
-                const matchesKeyword = row[2].toLowerCase().includes(searchTerm) || (row[0] && row[0].includes(searchTerm));
-                
+            const filtered = allSourcingData.filter(row => {
+                const matchesPlatform = (platform === "전체") || row[1].includes(platform);
+                const matchesKeyword = row[2].toLowerCase().includes(keyword);
                 return matchesPlatform && matchesKeyword;
             });
-
-            renderTable(filteredData);
+            renderTable(filtered);
         }
 
-        // 엔터키 지원
-        document.getElementById('searchInput').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') searchData();
-        });
-
-        // 초기화 실행
         window.onload = init;
     </script>
 </body>
