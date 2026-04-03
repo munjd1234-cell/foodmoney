@@ -1,27 +1,26 @@
-// 구글 시트 웹 게시 CSV URL (본인의 URL로 교체하세요)
-const SHEET_CSV_URL = "여기에_복사한_구글시트_CSV_URL을_넣으세요";
+// 1. 설정 페이지에서 저장한 주소를 가져오고, 없으면 기본 주소를 씁니다.
+const SHEET_CSV_URL = localStorage.getItem('goldenFarmerDB') || "https://docs.google.com/spreadsheets/d/e/2PACX-1vSXXXXXXXXX/pub?output=csv";
 
-// 시트 데이터를 가져오는 공통 함수
-async function fetchSheetData(sheetName) {
+// 2. 구글 시트 데이터를 가져오는 함수
+async function fetchSheetData() {
     try {
-        // 특정 시트(탭) 데이터를 가져오기 위해 gid 파라미터가 필요할 수 있으나, 
-        // 우선 전체 데이터를 가져와서 분리하는 로직을 기본으로 합니다.
         const response = await fetch(SHEET_CSV_URL);
         const csvText = await response.text();
         return parseCSV(csvText);
     } catch (error) {
-        console.error("데이터 로드 실패:", error);
+        console.error("데이터 로드 실패. 주소를 확인하세요:", error);
         return [];
     }
 }
 
-// CSV 파싱 함수
+// 3. CSV를 배열로 변환
 function parseCSV(csvText) {
     const rows = csvText.split('\n');
     return rows.map(row => row.split(',').map(cell => cell.trim()));
 }
 
-// 숫자에 콤마 찍기 (금액 표시용)
+// 4. 돈 표시용 (예: 1000 -> 1,000원)
 function formatMoney(num) {
+    if(!num || isNaN(num)) return "0원";
     return new Intl.NumberFormat('ko-KR').format(num) + "원";
 }
