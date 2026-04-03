@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>데이터 허브 설정 - 황금농부</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-900 text-gray-100 min-h-screen">
+
+    <div class="flex">
+        <aside class="w-64 bg-gray-800 h-screen sticky top-0 p-6 border-r border-gray-700">
+            <div class="flex items-center space-x-2 mb-10">
+                <i class="fa-solid fa-wheat-awn text-yellow-500 text-xl"></i>
+                <span class="text-lg font-bold">GOLDEN FARMER</span>
+            </div>
+            <nav class="space-y-4 text-sm">
+                <a href="../index.html" class="block p-3 hover:bg-gray-700 rounded-lg"><i class="fa-solid fa-chart-line mr-3"></i>대시보드</a>
+                <a href="sourcing.html" class="block p-3 hover:bg-gray-700 rounded-lg"><i class="fa-solid fa-magnifying-glass mr-3"></i>상품 소싱</a>
+                <a href="editor.html" class="block p-3 hover:bg-gray-700 rounded-lg"><i class="fa-solid fa-pen-nib mr-3"></i>상세페이지</a>
+                <a href="order.html" class="block p-3 hover:bg-gray-700 rounded-lg"><i class="fa-solid fa-truck-fast mr-3"></i>발주 관리</a>
+                <a href="finance.html" class="block p-3 hover:bg-gray-700 rounded-lg"><i class="fa-solid fa-file-invoice-dollar mr-3"></i>매입/정산</a>
+                <a href="settings.html" class="block p-3 bg-gray-600 rounded-lg font-bold"><i class="fa-solid fa-gear mr-3"></i>데이터 허브</a>
+            </nav>
+        </aside>
+
+        <main class="flex-1 p-8">
+            <header class="mb-8">
+                <h2 class="text-2xl font-bold text-yellow-500">데이터 허브 (Data Hub Settings)</h2>
+                <p class="text-gray-400 text-sm">시스템의 두뇌인 구글 시트와 자동화 도구를 연결합니다.</p>
+            </header>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                
+                <div class="bg-gray-800 p-6 rounded-2xl border border-gray-700">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-lg font-bold flex items-center"><i class="fa-solid fa-table text-green-500 mr-2"></i>메인 데이터베이스</h3>
+                        <span class="text-[10px] bg-green-900/30 text-green-500 px-2 py-1 rounded">연결됨</span>
+                    </div>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="text-xs text-gray-500 block mb-1">구글 시트 CSV 웹 게시 URL</label>
+                            <input type="text" id="dbUrl" placeholder="https://docs.google.com/spreadsheets/d/.../export?format=csv" class="w-full bg-gray-700 border-none rounded-lg px-4 py-2 text-xs text-gray-300 focus:ring-1 focus:ring-yellow-500">
+                        </div>
+                        <div class="flex space-x-2">
+                            <button onclick="saveSettings()" class="flex-1 bg-yellow-600 hover:bg-yellow-500 py-2 rounded-lg text-sm font-bold transition">연결 주소 저장</button>
+                            <button onclick="window.open('https://sheets.new')" class="bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded-lg text-sm">시트 열기</button>
+                        </div>
+                    </div>
+                    <div class="mt-6 p-4 bg-gray-900/50 rounded-lg border border-gray-700">
+                        <p class="text-xs text-gray-400 leading-relaxed">
+                            <strong>[연동 방법]</strong><br>
+                            1. 구글 시트에서 [파일 > 공유 > 웹에 게시]<br>
+                            2. '전체 문서'를 '쉼표로 구분된 값(.csv)'으로 게시<br>
+                            3. 생성된 URL을 위 칸에 붙여넣으세요.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="bg-gray-800 p-6 rounded-2xl border border-gray-700">
+                    <h3 class="text-lg font-bold mb-6 flex items-center"><i class="fa-solid fa-robot text-blue-500 mr-2"></i>자동화 로봇 설정</h3>
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center p-3 bg-gray-700/30 rounded-xl border border-gray-700">
+                            <div class="flex items-center">
+                                <i class="fa-solid fa-paper-plane text-blue-400 mr-3"></i>
+                                <div>
+                                    <p class="text-sm font-bold">네이버 밴드 수집기</p>
+                                    <p class="text-[10px] text-gray-500">Make.com 연동 중</p>
+                                </div>
+                            </div>
+                            <button class="text-xs text-gray-400 hover:text-white">설정</button>
+                        </div>
+                        <div class="flex justify-between items-center p-3 bg-gray-700/30 rounded-xl border border-gray-700 opacity-50">
+                            <div class="flex items-center">
+                                <i class="fa-solid fa-envelope text-red-400 mr-3"></i>
+                                <div>
+                                    <p class="text-sm font-bold">주문 자동 입력기</p>
+                                    <p class="text-[10px] text-gray-500">비활성화</p>
+                                </div>
+                            </div>
+                            <button class="text-xs text-blue-400">활성화</button>
+                        </div>
+                    </div>
+                    <div class="mt-6">
+                        <h4 class="text-xs font-bold text-gray-500 mb-2 uppercase">현재 데이터 흐름</h4>
+                        <div class="flex items-center justify-between px-4">
+                            <div class="text-center"><i class="fa-brands fa-slack text-xl mb-1"></i><p class="text-[9px]">SNS/밴드</p></div>
+                            <i class="fa-solid fa-chevron-right text-gray-700"></i>
+                            <div class="text-center text-yellow-500"><i class="fa-solid fa-gears text-xl mb-1"></i><p class="text-[9px]">Make/n8n</p></div>
+                            <i class="fa-solid fa-chevron-right text-gray-700"></i>
+                            <div class="text-center text-green-500"><i class="fa-solid fa-file-csv text-xl mb-1"></i><p class="text-[9px]">구글 시트</p></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <script>
+        function saveSettings() {
+            const url = document.getElementById('dbUrl').value;
+            localStorage.setItem('goldenFarmerDB', url);
+            alert('연결 설정이 브라우저에 저장되었습니다.\n이제 모든 페이지에서 이 시트 데이터를 사용합니다.');
+        }
+
+        // 페이지 로드 시 기존 값 불러오기
+        window.onload = function() {
+            const savedUrl = localStorage.getItem('goldenFarmerDB');
+            if(savedUrl) document.getElementById('dbUrl').value = savedUrl;
+        }
+    </script>
+</body>
+</html>
