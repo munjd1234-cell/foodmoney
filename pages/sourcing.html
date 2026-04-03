@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>상품 소싱 관리 - 황금농부</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .status-badge { @apply px-2 py-1 rounded-full text-xs font-bold; }
+        .row-hover:hover { background-color: rgba(55, 65, 81, 0.5); }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-100 min-h-screen">
+
+    <div class="flex">
+        <aside class="w-64 bg-gray-800 h-screen sticky top-0 p-6 border-r border-gray-700">
+            <div class="flex items-center space-x-2 mb-10">
+                <i class="fa-solid fa-wheat-awn text-yellow-500 text-xl"></i>
+                <span class="text-lg font-bold">GOLDEN FARMER</span>
+            </div>
+            <nav class="space-y-4 text-sm">
+                <a href="../index.html" class="block p-3 hover:bg-gray-700 rounded-lg"><i class="fa-solid fa-chart-line mr-3"></i>대시보드</a>
+                <a href="sourcing.html" class="block p-3 bg-yellow-600 rounded-lg font-bold"><i class="fa-solid fa-magnifying-glass mr-3"></i>상품 소싱</a>
+                <a href="editor.html" class="block p-3 hover:bg-gray-700 rounded-lg"><i class="fa-solid fa-pen-nib mr-3"></i>상세페이지</a>
+                <a href="order.html" class="block p-3 hover:bg-gray-700 rounded-lg"><i class="fa-solid fa-truck-fast mr-3"></i>발주 관리</a>
+                <a href="finance.html" class="block p-3 hover:bg-gray-700 rounded-lg"><i class="fa-solid fa-file-invoice-dollar mr-3"></i>매입/정산</a>
+            </nav>
+        </aside>
+
+        <main class="flex-1 p-8">
+            <header class="flex justify-between items-center mb-8">
+                <div>
+                    <h2 class="text-2xl font-bold">상품 소싱처 관리</h2>
+                    <p class="text-gray-400 text-sm">수집된 원물 데이터와 농장주 정보를 관리합니다.</p>
+                </div>
+                <div class="flex space-x-3">
+                    <button class="bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded-lg text-sm"><i class="fa-solid fa-download mr-2"></i>엑셀 다운로드</button>
+                    <button class="bg-yellow-600 hover:bg-yellow-500 px-4 py-2 rounded-lg text-sm font-bold"><i class="fa-solid fa-plus mr-2"></i>수동 소싱 추가</button>
+                </div>
+            </header>
+
+            <div class="bg-gray-800 p-4 rounded-xl border border-gray-700 mb-6 flex space-x-4">
+                <select class="bg-gray-700 border-none rounded-lg text-sm px-4 py-2 focus:ring-2 focus:ring-yellow-500">
+                    <option>플랫폼 전체</option>
+                    <option>네이버 밴드</option>
+                    <option>네이버 카페</option>
+                    <option>쿠팡</option>
+                </select>
+                <input type="text" placeholder="상품명 또는 지역명 검색..." class="flex-1 bg-gray-700 border-none rounded-lg text-sm px-4 py-2 focus:ring-2 focus:ring-yellow-500">
+                <button class="bg-blue-600 hover:bg-blue-500 px-6 py-2 rounded-lg text-sm font-bold">검색</button>
+            </div>
+
+            <div class="bg-gray-800 rounded-2xl border border-gray-700 overflow-hidden">
+                <table class="w-full text-left border-collapse">
+                    <thead class="bg-gray-700/50 text-gray-400 text-xs uppercase">
+                        <tr>
+                            <th class="p-4">수집일</th>
+                            <th class="p-4">플랫폼</th>
+                            <th class="p-4">상품명</th>
+                            <th class="p-4">공급가(원가)</th>
+                            <th class="p-4">시장가</th>
+                            <th class="p-4">마진율</th>
+                            <th class="p-4">상태</th>
+                            <th class="p-4 text-center">관리</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-sm divide-y divide-gray-700">
+                        <tr class="row-hover transition">
+                            <td class="p-4 text-gray-500">04-03</td>
+                            <td class="p-4"><span class="text-green-400 font-medium">네이버 밴드</span></td>
+                            <td class="p-4 font-bold">청송 햇부사 사과 5kg (중과)</td>
+                            <td class="p-4">18,500원</td>
+                            <td class="p-4 text-gray-400">29,900원</td>
+                            <td class="p-4 text-green-400 font-bold">38.1%</td>
+                            <td class="p-4"><span class="bg-yellow-900/30 text-yellow-500 px-2 py-1 rounded text-xs">검토중</span></td>
+                            <td class="p-4 text-center">
+                                <button class="text-blue-400 hover:underline mr-3">상세</button>
+                                <button class="text-red-400 hover:underline">삭제</button>
+                            </td>
+                        </tr>
+                        <tr class="row-hover transition">
+                            <td class="p-4 text-gray-500">04-02</td>
+                            <td class="p-4"><span class="text-blue-400 font-medium">쿠팡</span></td>
+                            <td class="p-4 font-bold">통영 생굴 1kg (산지직송)</td>
+                            <td class="p-4">9,800원</td>
+                            <td class="p-4 text-gray-400">15,500원</td>
+                            <td class="p-4 text-green-400 font-bold">36.7%</td>
+                            <td class="p-4"><span class="bg-green-900/30 text-green-500 px-2 py-1 rounded text-xs">거래중</span></td>
+                            <td class="p-4 text-center">
+                                <button class="text-blue-400 hover:underline mr-3">상세</button>
+                                <button class="text-red-400 hover:underline">삭제</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="mt-6 flex justify-center space-x-2">
+                <button class="w-8 h-8 flex items-center justify-center bg-gray-800 rounded border border-gray-700 text-sm hover:bg-gray-700">1</button>
+                <button class="w-8 h-8 flex items-center justify-center bg-gray-700 rounded border border-yellow-500 text-sm font-bold">2</button>
+                <button class="w-8 h-8 flex items-center justify-center bg-gray-800 rounded border border-gray-700 text-sm hover:bg-gray-700">3</button>
+            </div>
+        </main>
+    </div>
+
+</body>
+</html>
