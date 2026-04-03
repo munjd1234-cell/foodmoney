@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>통합 발주 관리 - 황금농부</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-900 text-gray-100 min-h-screen">
+
+    <div class="flex">
+        <aside class="w-64 bg-gray-800 h-screen sticky top-0 p-6 border-r border-gray-700">
+            <div class="flex items-center space-x-2 mb-10">
+                <i class="fa-solid fa-wheat-awn text-yellow-500 text-xl"></i>
+                <span class="text-lg font-bold">GOLDEN FARMER</span>
+            </div>
+            <nav class="space-y-4 text-sm">
+                <a href="../index.html" class="block p-3 hover:bg-gray-700 rounded-lg"><i class="fa-solid fa-chart-line mr-3"></i>대시보드</a>
+                <a href="sourcing.html" class="block p-3 hover:bg-gray-700 rounded-lg"><i class="fa-solid fa-magnifying-glass mr-3"></i>상품 소싱</a>
+                <a href="editor.html" class="block p-3 hover:bg-gray-700 rounded-lg"><i class="fa-solid fa-pen-nib mr-3"></i>상세페이지</a>
+                <a href="order.html" class="block p-3 bg-yellow-600 rounded-lg font-bold"><i class="fa-solid fa-truck-fast mr-3"></i>발주 관리</a>
+                <a href="finance.html" class="block p-3 hover:bg-gray-700 rounded-lg"><i class="fa-solid fa-file-invoice-dollar mr-3"></i>매입/정산</a>
+            </nav>
+        </aside>
+
+        <main class="flex-1 p-8">
+            <header class="flex justify-between items-center mb-8">
+                <div>
+                    <h2 class="text-2xl font-bold">통합 발주 시스템</h2>
+                    <p class="text-gray-400 text-sm">주문 수집 후 산지 발주 및 송장 관리를 진행합니다.</p>
+                </div>
+                <div class="flex space-x-3">
+                    <button class="bg-blue-600 hover:bg-blue-500 px-4 py-2 rounded-lg text-sm font-bold"><i class="fa-solid fa-file-import mr-2"></i>엑셀 주문 가져오기</button>
+                </div>
+            </header>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div class="bg-gray-800 p-6 rounded-2xl border-l-4 border-yellow-500">
+                    <p class="text-gray-400 text-xs uppercase mb-1">발주 대기</p>
+                    <p class="text-2xl font-bold">14 건</p>
+                </div>
+                <div class="bg-gray-800 p-6 rounded-2xl border-l-4 border-blue-500">
+                    <p class="text-gray-400 text-xs uppercase mb-1">배송 중</p>
+                    <p class="text-2xl font-bold">42 건</p>
+                </div>
+                <div class="bg-gray-800 p-6 rounded-2xl border-l-4 border-green-500">
+                    <p class="text-gray-400 text-xs uppercase mb-1">배송 완료(오늘)</p>
+                    <p class="text-2xl font-bold">11 건</p>
+                </div>
+            </div>
+
+            <div class="bg-gray-800 rounded-2xl border border-gray-700 overflow-hidden">
+                <table class="w-full text-left border-collapse">
+                    <thead class="bg-gray-700/50 text-gray-400 text-xs uppercase">
+                        <tr>
+                            <th class="p-4">주문번호</th>
+                            <th class="p-4">상품명/수량</th>
+                            <th class="p-4">수령인/연락처</th>
+                            <th class="p-4">주소</th>
+                            <th class="p-4">산지(소싱처)</th>
+                            <th class="p-4 text-center">발주액션</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-sm divide-y divide-gray-700" id="orderTable">
+                        <tr class="hover:bg-gray-700/30 transition">
+                            <td class="p-4 text-gray-400">ORD-20260403-01</td>
+                            <td class="p-4 font-bold">청송 사과 5kg / 1개</td>
+                            <td class="p-4">홍길동<br><span class="text-xs text-gray-500">010-1234-5678</span></td>
+                            <td class="p-4 text-xs text-gray-400">경기도 하남시 미사강변대로...</td>
+                            <td class="p-4 text-blue-400">청송꿀농장</td>
+                            <td class="p-4 text-center">
+                                <button onclick="generateMsg('청송꿀농장', '청송 사과 5kg', '1개', '홍길동', '010-1234-5678', '경기도 하남시...')" class="bg-green-600 hover:bg-green-500 px-3 py-1 rounded text-xs font-bold">문자복사</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="msgPreview" class="hidden mt-8 p-6 bg-green-900/20 border border-green-500/50 rounded-2xl">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-green-400 font-bold"><i class="fa-solid fa-comment-sms mr-2"></i>산지 발주 메시지 미리보기</h3>
+                    <button onclick="copyToClipboard()" class="text-xs bg-green-600 px-2 py-1 rounded">클립보드 복사</button>
+                </div>
+                <textarea id="msgTextArea" class="w-full bg-gray-900 border-none rounded-lg p-4 text-sm font-mono h-32 text-gray-300"></textarea>
+            </div>
+
+        </main>
+    </div>
+
+    <script>
+        function generateMsg(farm, product, qty, name, phone, addr) {
+            const preview = document.getElementById('msgPreview');
+            const textArea = document.getElementById('msgTextArea');
+            
+            const msg = `[발주 요청]\n농장명: ${farm}\n상품: ${product}\n수량: ${qty}\n받는분: ${name}\n연락처: ${phone}\n주소: ${addr}\n\n* 확인 후 송장 부탁드립니다.`;
+            
+            textArea.value = msg;
+            preview.classList.remove('hidden');
+        }
+
+        function copyToClipboard() {
+            const textArea = document.getElementById('msgTextArea');
+            textArea.select();
+            document.execCommand('copy');
+            alert('발주 메시지가 복사되었습니다. 농장주님께 문자로 보내세요!');
+        }
+    </script>
+</body>
+</html>
